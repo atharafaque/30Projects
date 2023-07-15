@@ -1,17 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <title>🥁 Drum Kit</title>
+  <title>JS Drum Kit</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="main.js">
+  <link rel="icon" href="https://fav.farm/✅" />
 </head>
- 
 <body>
-<div class="whole">
-  <h3>Drum Kit 🥁</h3>
-  <p>Click on alphabet to play sound</p>
+
+
   <div class="keys">
     <div data-key="65" class="key">
       <kbd>A</kbd>
@@ -49,17 +46,7 @@
       <kbd>L</kbd>
       <span class="sound">tink</span>
     </div>
-    
   </div>
-  
-  <footer class="rfooter">
-    
-  <h1> < / > with <span style='font-size:23px;color:red;'>&#10084;</span> by <a href="https://github.com/swapnilsparsh" >Swapnil Srivastava</a> </h1>
-  <h1> <a href="https://github.com/swapnilsparsh/30DaysOfJavaScript" > #30DaysOfJavaScript </a> </h1> 
-
-  </footer>
-
-</div>
 
   <audio data-key="65" src="sounds/clap.wav"></audio>
   <audio data-key="83" src="sounds/hihat.wav"></audio>
@@ -71,8 +58,27 @@
   <audio data-key="75" src="sounds/tom.wav"></audio>
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
-  <script src="main.js"></script>
+<script>
+  function removeTransition(e) {
+    if (e.propertyName !== 'transform') return;
+    e.target.classList.remove('playing');
+  }
+
+  function playSound(e) {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+    if (!audio) return;
+
+    key.classList.add('playing');
+    audio.currentTime = 0;
+    audio.play();
+  }
+
+  const keys = Array.from(document.querySelectorAll('.key'));
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  window.addEventListener('keydown', playSound);
+</script>
+
 
 </body>
-
 </html>
